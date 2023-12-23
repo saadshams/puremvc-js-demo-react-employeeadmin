@@ -3,8 +3,10 @@ import {UserProxy} from "../model/UserProxy";
 
 export class EmployeeAdminMediator extends puremvc.Mediator {
 
-    constructor(name, viewComponent) {
-        super(name, viewComponent);
+    static get NAME() { return "EmployeeAdminMediator" }
+
+    constructor() {
+        super(EmployeeAdminMediator.NAME, null);
     }
 
     onRegister() {
@@ -14,7 +16,11 @@ export class EmployeeAdminMediator extends puremvc.Mediator {
         function IUserList() {
             this.findAll = self.findAll.bind(self);
         }
-        this.viewComponent.delegate = new IUserList();
+        this.delegate = new IUserList();
+    }
+
+    getDelegate() {
+        return this.delegate;
     }
 
     findAll() {

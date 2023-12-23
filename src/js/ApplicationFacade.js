@@ -20,9 +20,8 @@ export class ApplicationFacade extends puremvc.Facade {
         return puremvc.Facade.getInstance(key, (k) => new ApplicationFacade(k));
     }
 
-    register(name, component) {
-        this.removeMediator(name + "Mediator");
-        this.registerMediator(new EmployeeAdminMediator(name + "Mediator", component));
+    getDelegate() {
+        return this.retrieveMediator(EmployeeAdminMediator.NAME).getDelegate();
     }
 
     startup(root) {

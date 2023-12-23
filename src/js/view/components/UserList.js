@@ -1,17 +1,15 @@
-import {ViewModel} from "../ViewModel";
 import {useEffect, useRef, useState} from "react";
+import {ApplicationFacade} from "../../ApplicationFacade";
 
 const UserList = () => {
 
-    const NAME = "UserList";
-
-    const viewModel = useRef(null);
+    const delegate = useRef(null);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        if(!viewModel.current) {
-            viewModel.current = new ViewModel(NAME); // UserForm, UserRole etc.
-            setUsers(viewModel.current.findAll());
+        if(!delegate.current) {
+            delegate.current = ApplicationFacade.getInstance(ApplicationFacade.KEY).getDelegate();
+            setUsers(delegate.current.findAll());
         }
     }, []);
 
