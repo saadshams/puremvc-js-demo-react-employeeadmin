@@ -12,11 +12,15 @@ export class EmployeeAdminMediator extends puremvc.Mediator {
     onRegister() {
         this.userProxy = this.facade.retrieveProxy(UserProxy.NAME);
 
-        let self = this;
-        function IUserList() {
-            this.findAll = self.findAll.bind(self);
+        // let self = this;
+        // function IUserList() {
+        //     this.findAll = self.findAll.bind(self);
+        // }
+        // this.delegate = new IUserList();
+
+        this.delegate = { // shorter version
+            findAll: () => this.findAll()
         }
-        this.delegate = new IUserList();
     }
 
     getDelegate() {
