@@ -9,7 +9,7 @@ const UserForm = () => {
 
 	const [departments, setDepartments] = useState([]); // UI Data
 	const {users, setUsers, user, setUser} = useContext(ApplicationContext); // User Data
-	const [formData, setFormData] = useState(new User()); // Input Data
+	const [form, setForm] = useState(new User()); // Input Data
 
 	const mediator = useRef(ApplicationFacade.getInstance(ApplicationFacade.KEY)
 		.retrieveMediator(EmployeeAdminMediator.NAME));
@@ -22,26 +22,26 @@ const UserForm = () => {
 	}, []);
 
 	useEffect(() => {
-		setFormData(user);
+		setForm(user);
 	}, [user]);
 
 	const handler = (event) => {
 		const {name, value} = event.target;
 
 		if (name === "userForm_submit") {
-			if (formData.id !== 0) { // update
-				setUsers(state => state.map(u => u.id === formData.id ? formData : u));
+			if (form.id !== 0) { // update
+				setUsers(state => state.map(u => u.id === form.id ? form : u));
 				setUser(new User());
 			} else {
 				setUsers(state => [ // save
-					...state, {...formData, id: users.length > 0 ? users[users.length - 1].id + 1 : 1, roles: new Set()}
+					...state, {...form, id: users.length > 0 ? users[users.length - 1].id + 1 : 1, roles: new Set()}
 				]);
 			}
 		} else if (name === "userForm_cancel") { // todo: reset user or clear the fields if user.id === 0
-			setFormData(new User()); // reset back to original user
+			setForm(new User()); // reset back to original user
 			setUser(new User());
 		} else {
-			setFormData(state => ({ // update fields
+			setForm(state => ({ // update fields
 				...state, [name]: name === "department" ? departments.find(d => d.id === parseInt(value)) : value
 			}));
 		}
@@ -59,31 +59,31 @@ const UserForm = () => {
 					<ul>
 						<li>
 							<label htmlFor="first">First Name:</label>
-							<input type="text" id="first" name="first" value={formData.first} onChange={handler} required />
+							<input type="text" id="first" name="first" value={form.first} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="last">Last Name:</label>
-							<input type="text" id="last" name="last" value={formData.last} onChange={handler} required />
+							<input type="text" id="last" name="last" value={form.last} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="email">Email:</label>
-							<input type="email" id="email" name="email" value={formData.email} onChange={handler} required />
+							<input type="email" id="email" name="email" value={form.email} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="username">Username:</label>
-							<input type="text" id="username" name="username" value={formData.username} onChange={handler} required />
+							<input type="text" id="username" name="username" value={form.username} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="password">Password:</label>
-							<input type="password" id="password" name="password" value={formData.password} onChange={handler} required />
+							<input type="password" id="password" name="password" value={form.password} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="confirm">Confirm:</label>
-							<input type="password" id="confirm" name="confirm" value={formData.password} onChange={handler} required />
+							<input type="password" id="confirm" name="confirm" value={form.password} onChange={handler} required />
 						</li>
 						<li>
 							<label htmlFor="department">Department:</label>
-							<select id="department" name="department" value={formData.department.id} onChange={handler}>
+							<select id="department" name="department" value={form.department.id} onChange={handler}>
 								{departments.map(department => (
 									<option key={`department_${department.id}`} value={department.id}>{department.name}</option>
 								))}
@@ -92,8 +92,8 @@ const UserForm = () => {
 					</ul>
 				</main>
 				<footer>
-					<button id="userForm_submit" name="userForm_submit" className="primary" onClick={handler} disabled={!formData}>{formData.id === 0 ? "Save" : "Update"}</button>
-					<button id="userForm_cancel" name="userForm_cancel" className="outline-primary" onClick={handler} disabled={!formData}>Cancel</button>
+					<button id="userForm_submit" name="userForm_submit" className="primary" onClick={handler} disabled={!form}>{form.id === 0 ? "Save" : "Update"}</button>
+					<button id="userForm_cancel" name="userForm_cancel" className="outline-primary" onClick={handler} disabled={!form}>Cancel</button>
 				</footer>
 			</div>
 		</section>

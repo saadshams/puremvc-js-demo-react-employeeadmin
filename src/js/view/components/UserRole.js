@@ -8,7 +8,7 @@ const UserRole = () => {
 
 	const [roles, setRoles] = useState(/** @type Set<Role> */ new Set()); // UI Data
 	const {user, setUser} = useContext(ApplicationContext); // User Data
-	const [formData, setFormData] = useState(/** @type Role */ null); // Input Data
+	const [form, setForm] = useState(/** @type Role */ null); // Input Data
 	const rolesRef = useRef(null); // DOM Element - roles dropdown
 
 	const mediator = useRef(ApplicationFacade.getInstance(ApplicationFacade.KEY)
@@ -25,14 +25,14 @@ const UserRole = () => {
 		const {name, value} = event.target;
 
 		if (name === "roles") { // dropdown change: set selected role and update button states
-			setFormData( [...roles].find(r => r.id === parseInt(value) ));
+			setForm( [...roles].find(r => r.id === parseInt(value) ));
 		} else if (name === "userRole_add" && user !== null) { // Add role to the user's roles set
-			setUser(state => ( {...state, roles: new Set([...state.roles, formData]) } ));
-			setFormData(null);
+			setUser(state => ( {...state, roles: new Set([...state.roles, form]) } ));
+			setForm(null);
 			rolesRef.current.value = 0;
 		} else if (name === "userRole_remove" && user !== null) { // Remove the selected role and update user's roles set
-			setUser(state => ( {...state, roles: new Set([...state.roles].filter(r => r !== formData)) } ));
-			setFormData(null);
+			setUser(state => ( {...state, roles: new Set([...state.roles].filter(r => r !== form)) } ));
+			setForm(null);
 			rolesRef.current.value = 0;
 		}
 	}
@@ -59,8 +59,8 @@ const UserRole = () => {
 							<option key={`role_${role.id}`} value={role.id}>{role.name}</option>
 						))}
 					</select>
-					<button id="userRole_add" name="userRole_add" className="primary" onClick={handler} disabled={formData ? formData.id === 0 : true}>Add</button>
-					<button id="userRole_remove" name="userRole_remove" className="outline-primary" onClick={handler} disabled={formData ? formData.id === 0 : true}>Remove</button>
+					<button id="userRole_add" name="userRole_add" className="primary" onClick={handler} disabled={form ? form.id === 0 : true}>Add</button>
+					<button id="userRole_remove" name="userRole_remove" className="outline-primary" onClick={handler} disabled={form ? form.id === 0 : true}>Remove</button>
 				</footer>
 			</div>
 		</section>

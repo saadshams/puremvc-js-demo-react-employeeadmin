@@ -8,7 +8,7 @@ import {User} from "../../model/vo/User";
 const UserList = () => {
 
     const {users, setUsers, user, setUser} = useContext(ApplicationContext); // User Data
-    const [formData, setFormData] = useState(0); // Input Data
+    const [form, setForm] = useState(0); // Input Data
 
     const mediator = useRef(ApplicationFacade.getInstance(ApplicationFacade.KEY)
         .retrieveMediator(EmployeeAdminMediator.NAME));
@@ -21,7 +21,7 @@ const UserList = () => {
     }, [setUsers]);
 
     useEffect(() => {
-        if (user.id === 0) setFormData(0);
+        if (user.id === 0) setForm(0);
         else
         setUsers(state => // display or replace
             state.map(u => u.id === user.id ? user : u)
@@ -31,7 +31,7 @@ const UserList = () => {
     const handler = (event) => {
         const {name} = event.target;
         if (name === "userList_add") {
-            setFormData(0); // radio button state management
+            setForm(0); // radio button state management
             setUser(new User()); // reset UserForm
         } else if (name === "userList_delete") {
             setUsers(state => state.filter(u => u.id !== user.id)); // remove an item
@@ -59,7 +59,7 @@ const UserList = () => {
                         {users.map(user => (
                             <li key={`user_${user.id}`} onClick={ () => setUser(user) }>
                                 <input type="radio" id={`user_${user.id}`} name="users" value={user.id}
-                                       onChange={() => setFormData(user.id)} checked={formData === user.id} />
+                                       onChange={() => setForm(user.id)} checked={form === user.id} />
                                 <label htmlFor={`user_${user.id}`}>
                                     <span>{user.last}, {user.first}</span>
                                     <span>{user.username}</span>
