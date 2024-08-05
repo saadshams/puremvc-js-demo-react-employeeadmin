@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './css/base.css';
+import Application from './js/Application';
 import reportWebVitals from './reportWebVitals';
-import {ApplicationFacade} from "./js/ApplicationFacade";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-ApplicationFacade.getInstance(ApplicationFacade.KEY).startup(root);
-
 root.render(
   // <React.StrictMode>
-    <App />
+    <Application />
   // </React.StrictMode>
 );
 

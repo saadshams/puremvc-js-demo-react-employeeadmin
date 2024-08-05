@@ -1,4 +1,5 @@
-import {puremvc} from "../api/puremvc-2.0.0";
+import {puremvc} from "@puremvc/puremvc-js-multicore-framework/bin/puremvc";
+import {Department} from "./enum/Department";
 
 export class UserProxy extends puremvc.Proxy {
 
@@ -8,12 +9,22 @@ export class UserProxy extends puremvc.Proxy {
         super(UserProxy.NAME, []);
     }
 
-    /** @param user {User} */
+    /** @param user User */
     add(user) {
         this.data.push(user);
     }
 
-    /** @returns {User[]} */
-    get users() { return this.data }
+    /** @returns {Promise<User[]>} */
+    getAllUsers(){
+        return new Promise((resolve, reject) => {
+            resolve(this.data);
+        });
+    }
+
+    getAllDepartments() {
+        return new Promise((resolve, reject) => {
+            resolve(Department.comboList)
+        });
+    }
 
 }

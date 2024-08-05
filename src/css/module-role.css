@@ -1,0 +1,38 @@
+@charset "UTF-8";
+#userRole .wrapper {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+
+#userRole #screen {
+    visibility: hidden;
+}
+
+#userRole header {}
+
+#userRole header button {
+    display: none;
+}
+
+#userRole main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#userRole footer {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 8px;
+
+    width: 100%;
+    padding: 10px;
+    margin-top: auto;
+}
+#userRole footer select {
+    flex: 2;
+}

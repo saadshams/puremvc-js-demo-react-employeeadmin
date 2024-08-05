@@ -1,0 +1,30 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+ol, ul, dl {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ol ol, ul ul, ol ul, ul ol { /* Nested Lists */
+  margin-bottom: 0;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

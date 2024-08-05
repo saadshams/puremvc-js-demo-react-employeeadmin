@@ -1,6 +1,5 @@
-import {puremvc} from "./api/puremvc-2.0.0"
+import {puremvc} from "@puremvc/puremvc-js-multicore-framework/bin/puremvc";
 import {StartupCommand} from "./controller/StartupCommand";
-import {EmployeeAdminMediator} from "./view/EmployeeAdminMediator";
 
 export class ApplicationFacade extends puremvc.Facade {
 
@@ -20,12 +19,8 @@ export class ApplicationFacade extends puremvc.Facade {
         return puremvc.Facade.getInstance(key, (k) => new ApplicationFacade(k));
     }
 
-    getDelegate() {
-        return this.retrieveMediator(EmployeeAdminMediator.NAME).getDelegate();
-    }
-
-    startup(root) {
-        this.sendNotification(ApplicationFacade.STARTUP, root);
+    startup() {
+        this.sendNotification(ApplicationFacade.STARTUP);
     }
 
 }

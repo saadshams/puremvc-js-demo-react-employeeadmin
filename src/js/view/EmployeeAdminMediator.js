@@ -1,5 +1,6 @@
-import {puremvc} from "../api/puremvc-2.0.0";
+import {puremvc} from "@puremvc/puremvc-js-multicore-framework/bin/puremvc";
 import {UserProxy} from "../model/UserProxy";
+import {RoleProxy} from "../model/RoleProxy";
 
 export class EmployeeAdminMediator extends puremvc.Mediator {
 
@@ -11,24 +12,29 @@ export class EmployeeAdminMediator extends puremvc.Mediator {
 
     onRegister() {
         this.userProxy = this.facade.retrieveProxy(UserProxy.NAME);
-
-        // let self = this;
-        // function IUserList() {
-        //     this.findAll = self.findAll.bind(self);
-        // }
-        // this.delegate = new IUserList();
-
-        this.delegate = { // shorter version
-            findAll: () => this.findAll()
-        }
+        this.roleProxy = this.facade.retrieveProxy(RoleProxy.NAME);
     }
 
-    getDelegate() {
-        return this.delegate;
+    /** @returns {Promise<void>} */
+    async getAllUsers() {
+        this._users = await this.userProxy.getAllUsers();
     }
 
-    findAll() {
-        return this.userProxy.users;
+    async getAllDepartments() {
+        this._departments = await this.userProxy.getAllDepartments();
     }
+
+    async getAllRoles() {
+        this._roles = await this.roleProxy.getAllRoles();
+    }
+
+    /** @returns {User[]} */
+    get users() { return this._users }
+
+    /** @returns {Department[]} */
+    get departments() { return this._departments }
+
+    /** @returns {Set<Role>} */
+    get roles() {return this._roles }
 
 }
