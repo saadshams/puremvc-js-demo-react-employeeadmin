@@ -7,10 +7,13 @@
 //
 
 import styles from "../../../css/role.module.css"
-import {useState} from "react";
-import {usePureMVC2} from "./usePureMVC2.js";
+import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {Role} from "../../model/valueObject/Role";
+
+export class UserRoleEvents {
+	static UPDATE = "events/user/role/update";
+}
 
 export const UserRole = () => {
 
@@ -19,9 +22,7 @@ export const UserRole = () => {
 	const [role, setRole] = useState(Role.NONE_SELECTED); // Input/Form Data
 	const [error, setError] = useState(null);
 
-	const ref = usePureMVC2({
-		UPDATE: "UserRoleUpdate",
-
+	const component = useMemo(() => ({
 		setRoles: setRoles,
 		setUser: (u) => {
 			setRole(Role.NONE_SELECTED);
@@ -32,7 +33,14 @@ export const UserRole = () => {
 			setRole(Role.NONE_SELECTED);
 			setUser(null);
 		}
-	}, ApplicationConstants.USER_ROLE_MOUNTED, ApplicationConstants.USER_ROLE_UNMOUNTED);
+	}), [setUser, setError]);
+
+	useEffect(() => {
+		dispatchEvent(new CustomEvent(ApplicationConstants.USER_ROLE_MOUNTED, {detail: component}));
+		return () => {
+			dispatchEvent(new CustomEvent(ApplicationConstants.USER_ROLE_UNMOUNTED));
+		}
+	}, [component]);
 
 	const onChange = (event) => {
 		setRole(roles.find(r => r.id === parseInt(event.target.value)));
@@ -41,7 +49,7 @@ export const UserRole = () => {
 	const onAdd = () => {
 		setUser(state => {
 			const data = {...state, roles: [...state.roles, roles.find(r => r.id === role.id)]};
-			dispatchEvent(new CustomEvent(ref.current.UPDATE, {detail: data}));
+			dispatchEvent(new CustomEvent(UserRoleEvents.UPDATE, {detail: data}));
 			return data;
 		});
 	};
@@ -49,7 +57,7 @@ export const UserRole = () => {
 	const onRemove = () => {
 		setUser(state => {
 			const data = {...state, roles: user.roles.filter(r => r.id !== role.id)};
-			dispatchEvent(new CustomEvent(ref.current.UPDATE, {detail: data}));
+			dispatchEvent(new CustomEvent(UserRoleEvents.UPDATE, {detail: data}));
 			return data;
 		});
 	};

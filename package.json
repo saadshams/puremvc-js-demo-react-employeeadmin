@@ -1,5 +1,5 @@
 {
-  "name": "employeeadmin",
+  "name": "puremvc-js-demo-react-employeeadmin",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -33,7 +33,6 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^15.9.0",
-    "playwright": "^1.47.1",
     "vite": "^5.4.1",
     "vitest": "^2.1.1"
   }

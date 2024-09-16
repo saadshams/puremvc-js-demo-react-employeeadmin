@@ -9,6 +9,7 @@
 import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {ApplicationFacade} from "../ApplicationFacade";
 import {UserProxy} from "../model/UserProxy";
+import {UserFormEvents} from "./components/UserForm.jsx";
 
 export class UserFormMediator extends Mediator {
 
@@ -19,9 +20,9 @@ export class UserFormMediator extends Mediator {
     constructor(component) {
         super(UserFormMediator.NAME, component);
         this.listeners = {
-            [component.SAVE]: event => this.onSave(event.detail),
-            [component.UPDATE]: event => this.onUpdate(event.detail),
-            [component.CANCEL]: event => this.onCancel(event.detail)
+            [UserFormEvents.SAVE]: event => this.onSave(event.detail),
+            [UserFormEvents.UPDATE]: event => this.onUpdate(event.detail),
+            [UserFormEvents.CANCEL]: event => this.onCancel(event.detail)
         };
     }
 

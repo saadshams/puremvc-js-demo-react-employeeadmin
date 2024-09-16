@@ -7,10 +7,15 @@
 //
 
 import styles from "../../../css/form.module.css"
-import {useState} from "react";
-import {usePureMVC1} from "./usePureMVC1";
+import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {User} from "../../model/valueObject/User";
+
+export class UserFormEvents {
+	static SAVE   = "events/user/form/save";
+	static UPDATE = "events/user/form/update";
+	static CANCEL = "events/user/form/cancel";
+}
 
 export const UserForm = () => {
 
@@ -18,18 +23,21 @@ export const UserForm = () => {
 	const [user, setUser] = useState(new User()); // User/Service/Input/Form Data
 	const [error, setError] = useState(null);
 
-	const component = usePureMVC1({
-		SAVE: "UserFormSave",
-		UPDATE: "UserFormUpdate",
-		CANCEL: "UserFormCancel",
-
+	const component = useMemo(() => ({
 		setDepartments: setDepartments,
 		setUser: setUser,
 		setError: setError,
 		reset: () => {
 			setUser(new User());
 		}
-	}, ApplicationConstants.USER_FORM_MOUNTED, ApplicationConstants.USER_FORM_UNMOUNTED);
+	}), [setDepartments, setUser, setError]);
+
+	useEffect(() => {
+		dispatchEvent(new CustomEvent(ApplicationConstants.USER_FORM_MOUNTED, {detail: component}));
+		return () => {
+			dispatchEvent(new CustomEvent(ApplicationConstants.USER_FORM_UNMOUNTED));
+		}
+	}, [component]);
 
 	const onChange = (event) => {
 		const {id, value} = event.target;
@@ -40,14 +48,14 @@ export const UserForm = () => {
 
 	const onSave = () => {
 		delete user.roles; // update user fields only without roles, roles are saved/updated separately.
-		const type = user.id === 0 ? component.SAVE : component.UPDATE;
+		const type = user.id === 0 ? UserFormEvents.SAVE : UserFormEvents.UPDATE;
 		dispatchEvent(new CustomEvent(type, {detail: user}));
 		setUser(new User());
 	}
 
 	const onCancel = () => {
 		setUser(new User());
-		dispatchEvent(new CustomEvent(component.CANCEL));
+		dispatchEvent(new CustomEvent(UserFormEvents.CANCEL));
 	}
 
 	return (

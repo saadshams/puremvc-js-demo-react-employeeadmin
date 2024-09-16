@@ -88,11 +88,15 @@ test.describe("End to End Tests", () => {
         await page.locator('input[id="username"]').fill('sshemp');
         await page.locator('input[id="password"]').fill('xyz987');
         await page.locator('input[id="confirm"]').fill('xyz987');
-        await page.locator('select[id="department"]').selectOption('1');
+        await page.locator('select[id="department"]').selectOption({value: '2'});
+        await page.waitForFunction(() => {
+            const button = document.querySelector('#form button.primary'); // Replace with your button selector
+            return button && !button.disabled;
+        });
         await page.locator('#form footer button.primary').click();
 
         // Wait for the list to be re-rendered
-        await page.waitForFunction(() => document.querySelectorAll('#list main ul li').length > 4);
+        await page.waitForFunction(() => document.querySelectorAll('#list main ul li').length === 5);
 
         // confirm new user fields
         let users = await page.locator('#list main ul li');
@@ -111,7 +115,7 @@ test.describe("End to End Tests", () => {
         expect(await spans.nth(3).innerText()).toEqual("Stooge");
         expect(await spans.nth(4).innerText()).toEqual("shemp@stooges.com");
         expect(await spans.nth(5).innerText()).toEqual("xyz987");
-        expect(await spans.nth(6).innerText()).toBe("Accounting");
+        expect(await spans.nth(6).innerText()).toBe("Sales");
 
         // Add role
         await page.getByText('sshemp').click();
@@ -127,6 +131,7 @@ test.describe("End to End Tests", () => {
 
         // Delete user
         await page.locator('#list footer button[id="delete"]').click();
+        await page.waitForFunction(() => document.querySelectorAll('#list main ul li').length === 4);
     });
 
 });

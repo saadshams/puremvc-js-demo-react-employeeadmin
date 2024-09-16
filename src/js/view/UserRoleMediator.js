@@ -9,6 +9,7 @@
 import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {ApplicationFacade} from "../ApplicationFacade";
 import {RoleProxy} from "../model/RoleProxy";
+import {UserRoleEvents} from "./components/UserRole.jsx";
 
 export class UserRoleMediator extends Mediator {
 
@@ -19,7 +20,7 @@ export class UserRoleMediator extends Mediator {
     constructor(component) {
         super(UserRoleMediator.NAME, component);
         this.listeners = {
-            [component.UPDATE]: event => this.onChange(event.detail)
+            [UserRoleEvents.UPDATE]: event => this.onChange(event.detail)
         };
     }
 

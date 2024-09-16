@@ -9,7 +9,7 @@
 import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {ApplicationFacade} from "../ApplicationFacade";
 import {UserProxy} from "../model/UserProxy";
-import UserListEvents from "./events/UserListEvents";
+import {UserListEvents} from "./components/UserList.jsx";
 
 export class UserListMediator extends Mediator {
 

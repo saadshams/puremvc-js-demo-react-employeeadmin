@@ -10,8 +10,12 @@ import styles from "../../../css/list.module.css"
 import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {User} from "../../model/valueObject/User";
-import UserListEvents from "../events/UserListEvents";
 
+export class UserListEvents {
+    static NEW   = "events/user/list/new";
+    static SELECT= "events/user/list/select";
+    static DELETE= "events/user/list/delete";
+}
 
 export const UserList = () => {
 
@@ -20,7 +24,6 @@ export const UserList = () => {
     const [error, setError] = useState(null);
 
     const component = useMemo(() => ({
-
         setUsers: setUsers,
         addUser: (user) => {
             setUsers(state => [...state, user]);
