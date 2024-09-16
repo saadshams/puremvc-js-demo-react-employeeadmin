@@ -75,14 +75,14 @@ export const UserRole = () => {
 					</main>
 					<footer>
 						<label htmlFor="roles"></label>
-						<select name="roles" value={role.id} onChange={onChange} disabled={user === null}>
+						<select id="roles" value={role.id} onChange={onChange} disabled={user === null}>
 							{roles.map(r => (
 								<option key={`role_option${r.id}`} value={r.id}>{r.name}</option>
 							))}
 						</select>
-						<button name="add" className="primary" onClick={() => onAdd()}
+						<button id="add" className="primary" onClick={() => onAdd()}
 						        disabled={role === Role.NONE_SELECTED}>Add</button>
-						<button name="remove" className="outline-primary" onClick={() => onRemove()}
+						<button id="remove" className="outline-primary" onClick={() => onRemove()}
 						        disabled={role === Role.NONE_SELECTED}>Remove</button>
 					</footer>
 				</div>

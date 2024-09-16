@@ -105,8 +105,8 @@ export const UserList = () => {
                         </ul>
                     </main>
                     <footer>
-                        <button name="add" className="primary" onClick={() => onNew()}>Add</button>
-                        <button name="delete" className="outline-primary" onClick={() => onDelete(selectedUser)}
+                        <button id="add" className="primary" onClick={() => onNew()}>Add</button>
+                        <button id="delete" className="outline-primary" onClick={() => onDelete(selectedUser)}
                                 data-disabled={selectedUser === null}>Delete</button>
                     </footer>
                 </div>

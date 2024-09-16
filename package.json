@@ -10,7 +10,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "test:e2e": "npx playwright test --config=playwright.config.js"
+    "test:e2e": "npx playwright test --workers=1"
   },
   "dependencies": {
     "@puremvc/puremvc-js-multicore-framework": "^2.0.8",

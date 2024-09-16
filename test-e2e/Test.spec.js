@@ -19,14 +19,14 @@ test.describe("End to End Tests", () => {
         await page.goto("http://localhost:4173/");
 
         await page.getByText('lstooge').click();
-        await expect(page.locator('input[name="first"]')).toHaveValue("Larry");
-        await expect(page.locator('input[name="last"]')).toHaveValue("Stooge");
-        await expect(page.locator('input[name="email"]')).toHaveValue("larry@stooges.com");
-        await expect(page.locator('input[name="username"]')).toHaveValue("lstooge");
-        await expect(page.locator('input[name="password"]')).toHaveValue("ijk456");
-        await expect(page.locator('input[name="confirm"]')).toHaveValue("ijk456");
+        await expect(page.locator('input[id="first"]')).toHaveValue("Larry");
+        await expect(page.locator('input[id="last"]')).toHaveValue("Stooge");
+        await expect(page.locator('input[id="email"]')).toHaveValue("larry@stooges.com");
+        await expect(page.locator('input[id="username"]')).toHaveValue("lstooge");
+        await expect(page.locator('input[id="password"]')).toHaveValue("ijk456");
+        await expect(page.locator('input[id="confirm"]')).toHaveValue("ijk456");
 
-        let department = page.locator('select[name="department"] option:checked');
+        let department = page.locator('select[id="department"] option:checked');
         expect(await department.getAttribute('value')).toBe("1");
         expect(await department.innerText()).toBe("Accounting");
 
@@ -39,14 +39,14 @@ test.describe("End to End Tests", () => {
         await page.goto("http://localhost:4173/");
 
         await page.getByText('cstooge').click();
-        await expect(page.locator('input[name="first"]')).toHaveValue("Curly");
-        await expect(page.locator('input[name="last"]')).toHaveValue("Stooge");
-        await expect(page.locator('input[name="email"]')).toHaveValue("curly@stooges.com");
-        await expect(page.locator('input[name="username"]')).toHaveValue("cstooge");
-        await expect(page.locator('input[name="password"]')).toHaveValue("xyz987");
-        await expect(page.locator('input[name="confirm"]')).toHaveValue("xyz987");
+        await expect(page.locator('input[id="first"]')).toHaveValue("Curly");
+        await expect(page.locator('input[id="last"]')).toHaveValue("Stooge");
+        await expect(page.locator('input[id="email"]')).toHaveValue("curly@stooges.com");
+        await expect(page.locator('input[id="username"]')).toHaveValue("cstooge");
+        await expect(page.locator('input[id="password"]')).toHaveValue("xyz987");
+        await expect(page.locator('input[id="confirm"]')).toHaveValue("xyz987");
 
-        let department = page.locator('select[name="department"] option:checked');
+        let department = page.locator('select[id="department"] option:checked');
         expect(await department.getAttribute('value')).toBe("2");
         expect(await department.innerText()).toBe("Sales");
 
@@ -60,14 +60,14 @@ test.describe("End to End Tests", () => {
         await page.goto("http://localhost:4173/");
 
         await page.getByText('mstooge').click();
-        await expect(page.locator('input[name="first"]')).toHaveValue("Moe");
-        await expect(page.locator('input[name="last"]')).toHaveValue("Stooge");
-        await expect(page.locator('input[name="email"]')).toHaveValue("moe@stooges.com");
-        await expect(page.locator('input[name="username"]')).toHaveValue("mstooge");
-        await expect(page.locator('input[name="password"]')).toHaveValue("abc123");
-        await expect(page.locator('input[name="confirm"]')).toHaveValue("abc123");
+        await expect(page.locator('input[id="first"]')).toHaveValue("Moe");
+        await expect(page.locator('input[id="last"]')).toHaveValue("Stooge");
+        await expect(page.locator('input[id="email"]')).toHaveValue("moe@stooges.com");
+        await expect(page.locator('input[id="username"]')).toHaveValue("mstooge");
+        await expect(page.locator('input[id="password"]')).toHaveValue("abc123");
+        await expect(page.locator('input[id="confirm"]')).toHaveValue("abc123");
 
-        let department = page.locator('select[name="department"] option:checked');
+        let department = page.locator('select[id="department"] option:checked');
         expect(await department.getAttribute('value')).toBe("3");
         expect(await department.innerText()).toBe("Plant");
 
@@ -82,13 +82,13 @@ test.describe("End to End Tests", () => {
         await page.goto("http://localhost:4173/");
 
         // Fill the form
-        await page.locator('input[name="first"]').fill('Shemp');
-        await page.locator('input[name="last"]').fill('Stooge');
-        await page.locator('input[name="email"]').fill('shemp@stooges.com');
-        await page.locator('input[name="username"]').fill('sshemp');
-        await page.locator('input[name="password"]').fill('xyz987');
-        await page.locator('input[name="confirm"]').fill('xyz987');
-        await page.locator('select[name="department"]').selectOption('1');
+        await page.locator('input[id="first"]').fill('Shemp');
+        await page.locator('input[id="last"]').fill('Stooge');
+        await page.locator('input[id="email"]').fill('shemp@stooges.com');
+        await page.locator('input[id="username"]').fill('sshemp');
+        await page.locator('input[id="password"]').fill('xyz987');
+        await page.locator('input[id="confirm"]').fill('xyz987');
+        await page.locator('select[id="department"]').selectOption('1');
         await page.locator('#form footer button.primary').click();
 
         // Wait for the list to be re-rendered
@@ -115,9 +115,10 @@ test.describe("End to End Tests", () => {
 
         // Add role
         await page.getByText('sshemp').click();
-        await page.locator('select[name="roles"]');
-        await page.locator('#role footer select[name="roles"]').selectOption('1');
-        await page.locator('#role footer button[name="add"]').click();
+        await page.locator('#role footer select[id="roles"]').click();
+        await page.waitForSelector('#role footer select[id="roles"]');
+        await page.locator('#role footer select[id="roles"]').selectOption({value: '1'});
+        await page.locator('#role footer button[id="add"]').click();
 
         // Confirm an added role
         const roles = await page.locator('#role main ul li');
@@ -125,7 +126,7 @@ test.describe("End to End Tests", () => {
         expect(await roles.nth(0).innerText()).toEqual("Administrator");
 
         // Delete user
-        await page.locator('#list footer button[name="delete"]').click();
+        await page.locator('#list footer button[id="delete"]').click();
     });
 
 });
