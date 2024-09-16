@@ -13,6 +13,7 @@ import {ApplicationConstants} from "../../../src/js/ApplicationConstants.js";
 import {User} from "../../../src/js/model/valueObject/User.js";
 import {Department} from "../../../src/js/model/valueObject/Department.js";
 import {UserList} from "../../../src/js/view/components/UserList.jsx";
+import UserListEvents from "../../../src/js/view/events/UserListEvents";
 
 describe("UserList", () => {
 
@@ -38,9 +39,8 @@ describe("UserList", () => {
 
     it("should test UserListNew event", async () => {
         await new Promise(resolve => {
-            window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, event => {
-                const component = event.detail;
-                window.addEventListener(component.NEW, resolve, {once: true});
+            window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, () => {
+                window.addEventListener(UserListEvents.NEW, resolve, {once: true});
                 fireEvent.click(screen.getByText("Add"));
             }, {once: true});
             render(<UserList />);
@@ -100,7 +100,7 @@ describe("UserList", () => {
                 act(() => { component.addUser(larry) });
                 await waitFor(() => { expect(screen.getByText("lstooge")).toBeInTheDocument() });
 
-                window.addEventListener(component.SELECT, ({detail}) => {
+                window.addEventListener(UserListEvents.SELECT, ({detail}) => {
                     expect(detail.username).to.equal(larry.username);
                     resolve();
                 }, {once: true});
@@ -120,8 +120,8 @@ describe("UserList", () => {
                 act(() => { component.addUser(larry) });
                 await waitFor(() => { expect(screen.getByText("lstooge")).toBeInTheDocument() });
 
-                window.addEventListener(component.SELECT, async () => {
-                    window.addEventListener(component.DELETE, ({detail}) => { // delete
+                window.addEventListener(UserListEvents.SELECT, async () => {
+                    window.addEventListener(UserListEvents.DELETE, ({detail}) => { // delete
                         expect(detail.username).to.equal("lstooge");
                         resolve();
                     }, {once: true});
