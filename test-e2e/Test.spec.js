@@ -11,12 +11,12 @@ import {expect, test} from "@playwright/test";
 test.describe("End to End Tests", () => {
 
     test("test for title", async ({page}) => {
-        await page.goto("http://localhost:4173/");
+        await page.goto("http://localhost:5173/");
         await expect(page).toHaveTitle("Employee Admin");
     });
 
     test("test for Larry", async ({page}) => {
-        await page.goto("http://localhost:4173/");
+        await page.goto("http://localhost:5173/");
 
         await page.getByText('lstooge').click();
         await expect(page.locator('input[name="first"]')).toHaveValue("Larry");
@@ -36,7 +36,7 @@ test.describe("End to End Tests", () => {
     });
 
     test("test for Curly", async ({page}) => {
-        await page.goto("http://localhost:4173/");
+        await page.goto("http://localhost:5173/");
 
         await page.getByText('cstooge').click();
         await expect(page.locator('input[name="first"]')).toHaveValue("Curly");
@@ -57,7 +57,7 @@ test.describe("End to End Tests", () => {
     });
 
     test("test for Moe", async ({page}) => {
-        await page.goto("http://localhost:4173/");
+        await page.goto("http://localhost:5173/");
 
         await page.getByText('mstooge').click();
         await expect(page.locator('input[name="first"]')).toHaveValue("Moe");
@@ -79,7 +79,7 @@ test.describe("End to End Tests", () => {
     });
 
     test("test insert user", async ({page}) => {
-        await page.goto("http://localhost:4173/");
+        await page.goto("http://localhost:5173/");
 
         // Fill the form
         await page.locator('input[name="first"]').fill('Shemp');
