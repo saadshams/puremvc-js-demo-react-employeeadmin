@@ -1,4 +1,4 @@
-## [PureMVC](http://puremvc.github.com/) [JavaScript](https://github.com/PureMVC/puremvc-js-multicore-framework/wiki) [React](https://en.wikipedia.org/wiki/React_(JavaScript_library)) Demo - Employee Admin [![Node.js CI](https://github.com/saadshams/puremvc-js-demo-react-employeeadmin/actions/workflows/node.js.yml/badge.svg)](https://github.com/saadshams/puremvc-js-demo-react-employeeadmin/actions/workflows/node.js.yml)
+## [PureMVC](http://puremvc.github.com/) [JavaScript](https://github.com/PureMVC/puremvc-js-multicore-framework/wiki) [React](https://en.wikipedia.org/wiki/React_(JavaScript_library)) Demo - Employee Admin
 
 This demo illustrates techniques for performing routine client-side maintenance operations in a PureMVC-based application.
 
