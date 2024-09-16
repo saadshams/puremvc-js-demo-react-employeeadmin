@@ -9,6 +9,7 @@
 import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {ApplicationFacade} from "../ApplicationFacade";
 import {UserProxy} from "../model/UserProxy";
+import UserListEvents from "./events/UserListEvents";
 
 export class UserListMediator extends Mediator {
 
@@ -19,9 +20,9 @@ export class UserListMediator extends Mediator {
     constructor(component) {
         super(UserListMediator.NAME, component);
         this.listeners = {
-            [component.NEW]: event => this.onNew(event.detail),
-            [component.SELECT]: event => this.onSelect(event.detail),
-            [component.DELETE]: event => this.onDelete(event.detail)
+            [UserListEvents.NEW]: event => this.onNew(event.detail),
+            [UserListEvents.SELECT]: event => this.onSelect(event.detail),
+            [UserListEvents.DELETE]: event => this.onDelete(event.detail)
         };
     }
 

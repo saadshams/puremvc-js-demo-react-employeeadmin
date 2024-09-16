@@ -10,6 +10,8 @@ import styles from "../../../css/list.module.css"
 import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {User} from "../../model/valueObject/User";
+import UserListEvents from "../events/UserListEvents";
+
 
 export const UserList = () => {
 
@@ -18,9 +20,6 @@ export const UserList = () => {
     const [error, setError] = useState(null);
 
     const component = useMemo(() => ({
-        NEW: "UserListNew",
-        SELECT: "UserListSelect",
-        DELETE: "UserListDelete",
 
         setUsers: setUsers,
         addUser: (user) => {
@@ -47,17 +46,17 @@ export const UserList = () => {
     }, [component]);
 
     const onNew = () => {
-        dispatchEvent(new CustomEvent(component.NEW, {detail: new User()}));
+        dispatchEvent(new CustomEvent(UserListEvents.NEW, {detail: new User()}));
         setSelectedUser(null);
     }
 
     const onSelect = (user) => {
-        dispatchEvent(new CustomEvent(component.SELECT, {detail: user}));
+        dispatchEvent(new CustomEvent(UserListEvents.SELECT, {detail: user}));
         setSelectedUser(user);
     }
 
     const onDelete = (user) => {
-        dispatchEvent(new CustomEvent(component.DELETE, {detail: user}))
+        dispatchEvent(new CustomEvent(UserListEvents.DELETE, {detail: user}))
         setUsers(state => state.filter(u => u.id !== user.id));
         setSelectedUser(null);
     }
