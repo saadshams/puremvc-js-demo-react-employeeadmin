@@ -7,19 +7,17 @@
 //
 
 import styles from "../../../css/list.module.css"
-import {useEffect, useImperativeHandle, useRef, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {User} from "../../model/valueObject/User";
 
-const UserList = () => {
+export const UserList = () => {
 
     const [users, setUsers] = useState([]); // User/Service Data
     const [selectedUser, setSelectedUser] = useState(null); // Input/Form Data
     const [error, setError] = useState(null);
 
-    const ref = useRef({});
-
-    useImperativeHandle(ref, () => ({
+    const component = useMemo(() => ({
         NEW: "UserListNew",
         SELECT: "UserListSelect",
         DELETE: "UserListDelete",
@@ -39,27 +37,27 @@ const UserList = () => {
             setSelectedUser(null);
         },
         setError: setError
-    }));
+    }), [setUsers, setSelectedUser, setError]);
 
     useEffect(() => {
-        dispatchEvent(new CustomEvent(ApplicationConstants.USER_LIST_MOUNTED, {detail: ref.current}));
+        dispatchEvent(new CustomEvent(ApplicationConstants.USER_LIST_MOUNTED, {detail: component}));
         return () => {
             dispatchEvent(new CustomEvent(ApplicationConstants.USER_LIST_UNMOUNTED));
         }
-    }, [ref]);
+    }, [component]);
 
     const onNew = () => {
-        dispatchEvent(new CustomEvent(ref.current.NEW, {detail: new User()}));
+        dispatchEvent(new CustomEvent(component.NEW, {detail: new User()}));
         setSelectedUser(null);
     }
 
     const onSelect = (user) => {
-        dispatchEvent(new CustomEvent(ref.current.SELECT, {detail: user}));
+        dispatchEvent(new CustomEvent(component.SELECT, {detail: user}));
         setSelectedUser(user);
     }
 
     const onDelete = (user) => {
-        dispatchEvent(new CustomEvent(ref.current.DELETE, {detail: user}))
+        dispatchEvent(new CustomEvent(component.DELETE, {detail: user}))
         setUsers(state => state.filter(u => u.id !== user.id));
         setSelectedUser(null);
     }
@@ -116,5 +114,3 @@ const UserList = () => {
         </section>
     );
 };
-
-export default UserList

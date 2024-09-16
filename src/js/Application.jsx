@@ -9,9 +9,9 @@
 import "../css/_base.css"
 import "../css/_layout.css";
 import "../css/_theme.css"
-import UserList from "./view/components/UserList";
-import UserForm from "./view/components/UserForm";
-import UserRole from "./view/components/UserRole";
+import {UserList} from "./view/components/UserList";
+import {UserForm} from "./view/components/UserForm";
+import {UserRole} from "./view/components/UserRole";
 import {ApplicationFacade} from "./ApplicationFacade";
 
 const Application = () => {

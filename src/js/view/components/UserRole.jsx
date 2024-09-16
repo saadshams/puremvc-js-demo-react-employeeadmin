@@ -7,20 +7,19 @@
 //
 
 import styles from "../../../css/role.module.css"
-import {useEffect, useImperativeHandle, useRef, useState} from "react";
+import {useState} from "react";
+import {usePureMVC2} from "./usePureMVC2.js";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {Role} from "../../model/valueObject/Role";
 
-const UserRole = () => {
+export const UserRole = () => {
 
 	const [roles, setRoles] = useState(/** @type Role[] */ []); // UI Data
 	const [user, setUser] = useState(/** @type User */ null); // User/Service Data
 	const [role, setRole] = useState(Role.NONE_SELECTED); // Input/Form Data
 	const [error, setError] = useState(null);
 
-	const ref = useRef({});
-
-	useImperativeHandle(ref, () => ({
+	const ref = usePureMVC2({
 		UPDATE: "UserRoleUpdate",
 
 		setRoles: setRoles,
@@ -29,15 +28,11 @@ const UserRole = () => {
 			setUser(u);
 		},
 		setError: setError,
-		reset: reset
-	}));
-
-	useEffect(() => {
-		dispatchEvent(new CustomEvent(ApplicationConstants.USER_ROLE_MOUNTED, {detail: ref.current}));
-		return () => {
-			dispatchEvent(new CustomEvent(ApplicationConstants.USER_ROLE_UNMOUNTED));
+		reset: () => {
+			setRole(Role.NONE_SELECTED);
+			setUser(null);
 		}
-	}, [ref]);
+	}, ApplicationConstants.USER_ROLE_MOUNTED, ApplicationConstants.USER_ROLE_UNMOUNTED);
 
 	const onChange = (event) => {
 		setRole(roles.find(r => r.id === parseInt(event.target.value)));
@@ -58,11 +53,6 @@ const UserRole = () => {
 			return data;
 		});
 	};
-
-	const reset = () => {
-		setRole(Role.NONE_SELECTED);
-		setUser(null);
-	}
 
 	return (
 		<section id="role">
@@ -100,5 +90,3 @@ const UserRole = () => {
 		</section>
 	);
 };
-
-export default UserRole

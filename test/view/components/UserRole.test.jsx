@@ -13,7 +13,7 @@ import {ApplicationConstants} from "../../../src/js/ApplicationConstants.js";
 import {User} from "../../../src/js/model/valueObject/User.js";
 import {Department} from "../../../src/js/model/valueObject/Department.js";
 import {Role} from "../../../src/js/model/valueObject/Role.js";
-import UserRole from "../../../src/js/view/components/UserRole.jsx";
+import {UserRole} from "../../../src/js/view/components/UserRole.jsx";
 
 describe("UserRole", () => {
 

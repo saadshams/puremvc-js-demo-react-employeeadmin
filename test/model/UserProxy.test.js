@@ -7,10 +7,10 @@
 //
 
 import { describe, expect, beforeEach, it, vi } from "vitest";
+import {ApplicationConstants} from "../../src/js/ApplicationConstants.js";
 import {UserProxy} from "../../src/js/model/UserProxy.js";
 import {User} from "../../src/js/model/valueObject/User.js";
 import {Department} from "../../src/js/model/valueObject/Department.js";
-import {ApplicationConstants} from "../../src/js/ApplicationConstants.js";
 
 globalThis.fetch = vi.fn();
 

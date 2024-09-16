@@ -12,7 +12,7 @@ import {act} from "react";
 import {ApplicationConstants} from "../../../src/js/ApplicationConstants.js";
 import {User} from "../../../src/js/model/valueObject/User.js";
 import {Department} from "../../../src/js/model/valueObject/Department.js";
-import UserList from "../../../src/js/view/components/UserList.jsx";
+import {UserList} from "../../../src/js/view/components/UserList.jsx";
 
 describe("UserList", () => {
 
@@ -21,34 +21,34 @@ describe("UserList", () => {
         expect(screen.getByText(/User List/i)).toBeInTheDocument();
     });
 
-    it("should test mounted event", () => {
-        return new Promise(resolve => {
+    it("should test mounted event", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, resolve, {once: true});
             render(<UserList />);
         });
     });
 
-    it("should test unmounted event", () => {
-        return new Promise(resolve => {
+    it("should test unmounted event", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_UNMOUNTED, resolve, {once: true});
             const {unmount} = render(<UserList />);
             unmount();
         });
     });
 
-    it("should test UserListNew event", () => {
-        return new Promise(resolve => {
-            window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, ({detail}) => {
-                window.addEventListener(detail.NEW, resolve, {once: true});
+    it("should test UserListNew event", async () => {
+        await new Promise(resolve => {
+            window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, event => {
+                const component = event.detail;
+                window.addEventListener(component.NEW, resolve, {once: true});
+                fireEvent.click(screen.getByText("Add"));
             }, {once: true});
-
             render(<UserList />);
-            fireEvent.click(screen.getByText("Add"));
         });
     });
 
-    it("should test setUsers", () => {
-        return new Promise(resolve => {
+    it("should test setUsers", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, async event => {
                 let component = event.detail;
                 const larry = new User(1, "lstooge","Larry", "Stooge", "larry@stooges.com", "ijk456", new Department(1, "Accounting"), []);
@@ -60,8 +60,8 @@ describe("UserList", () => {
         });
     });
 
-    it("should test addUser", () => {
-        return new Promise(resolve => {
+    it("should test addUser", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, async (event) => {
                 const component = event.detail;
                 const larry = new User(1, "lstooge","Larry", "Stooge", "larry@stooges.com", "ijk456", new Department(1, "Accounting"), []);
@@ -73,8 +73,8 @@ describe("UserList", () => {
         });
     });
 
-    it("should test updateUser", () => {
-        return new Promise(resolve => {
+    it("should test updateUser", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, async (event) => {
                 const component = event.detail;
                 const larry = new User(1, "lstooge","Larry", "Stooge", "larry@stooges.com", "ijk456", new Department(1, "Accounting"), []);
@@ -91,8 +91,8 @@ describe("UserList", () => {
         });
     });
 
-    it("should select user", () => {
-        return new Promise(resolve => {
+    it("should select user", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, async (event) => {
 
                 const component = event.detail;
@@ -111,8 +111,8 @@ describe("UserList", () => {
         });
     });
 
-    it("should delete user", () => {
-        return new Promise(resolve => {
+    it("should delete user", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_LIST_MOUNTED, async (event) => {
 
                 const component = event.detail;
