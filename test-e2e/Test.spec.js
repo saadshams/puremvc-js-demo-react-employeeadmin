@@ -130,8 +130,6 @@ test.describe("End to End Tests", () => {
         // Delete user
         await page.locator('#list footer button[id="delete"]').click();
         await page.waitForFunction(() => document.querySelectorAll('#list main ul li').length === 4);
-
-
     });
 
 });

@@ -22,6 +22,13 @@ export const UserRole = () => {
 	const [role, setRole] = useState(Role.NONE_SELECTED); // Input/Form Data
 	const [error, setError] = useState(null);
 
+	/**
+	 * @typedef {Object} UserRole
+	 * @property {(roles: Role[]) => void} setRoles
+	 * @property {(user: User) => void} setUser
+	 * @property {(error: string) => void} setError
+	 * @property {() => void} reset
+	 */
 	const component = useMemo(() => ({
 		setRoles: setRoles,
 		setUser: (u) => {

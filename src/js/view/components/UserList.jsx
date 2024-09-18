@@ -23,6 +23,15 @@ export const UserList = () => {
     const [selectedUser, setSelectedUser] = useState(null); // Input/Form Data
     const [error, setError] = useState(null);
 
+    /**
+     * @typedef {Object} UserList
+     * @property {(users: User[]) => void} setUsers
+     * @property {(user: User) => void} addUser
+     * @property {(user: User) => void} updateUser
+     * @property {(user: User) => void} updateRoles
+     * @property {() => void} deSelect
+     * @property {(error: string) => void} setError
+     */
     const component = useMemo(() => ({
         setUsers: setUsers,
         addUser: (user) => {

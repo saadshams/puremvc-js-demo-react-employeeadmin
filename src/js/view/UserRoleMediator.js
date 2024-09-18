@@ -27,6 +27,7 @@ export class UserRoleMediator extends Mediator {
     onRegister() {
         Object.keys(this.listeners).forEach(key => window.addEventListener(key, this.listeners[key]));
 
+        /** @type {RoleProxy} */
         this.roleProxy = this.facade.retrieveProxy(RoleProxy.NAME);
         this.roleProxy.findAllRoles()
             .then(roles => this.component.setRoles(roles))
@@ -45,23 +46,29 @@ export class UserRoleMediator extends Mediator {
         ]
     }
 
+    /**
+     * @param {Notification} notification
+     * @param {User} notification.body
+     */
     handleNotification(notification) {
         switch(notification.name) {
             case ApplicationFacade.NEW_USER:
                 this.component.reset();
                 break;
+
             case ApplicationFacade.USER_SELECTED:
-                const user = notification.body;
-                this.roleProxy.findRolesById(user.id)
+                this.roleProxy.findRolesById(notification.body.id)
                     .then(result => {
-                        user.roles = result;
-                        this.component.setUser(user);
+                        notification.body.roles = result;
+                        this.component.setUser(notification.body);
                     })
                     .catch(error => this.component.setError(error));
                 break;
+
             case ApplicationFacade.USER_DELETED:
                 this.component.reset();
                 break;
+
             default:
                 break;
         }
@@ -72,6 +79,7 @@ export class UserRoleMediator extends Mediator {
         this.facade.sendNotification(ApplicationFacade.ROLE_UPDATE, user);
     }
 
+    /** @returns {UserRole} */
     get component() {
         return this.viewComponent;
     }

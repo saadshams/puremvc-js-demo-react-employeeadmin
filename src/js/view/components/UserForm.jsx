@@ -23,6 +23,13 @@ export const UserForm = () => {
 	const [user, setUser] = useState(new User()); // User/Service/Input/Form Data
 	const [error, setError] = useState(null);
 
+	/**
+	 * @typedef {Object} UserForm
+	 * @property {(departments: Department[]) => void} setDepartments
+	 * @property {(user: User) => void} setUser
+	 * @property {(error: string) => void} setError
+	 * @property {() => void} reset
+	 */
 	const component = useMemo(() => ({
 		setDepartments: setDepartments,
 		setUser: setUser,
@@ -110,7 +117,7 @@ export const UserForm = () => {
 					<footer>
 						<button className="primary" disabled={!User.isValid(user)}
 						        onClick={() => onSave()}>{user.id === 0 ? "Save" : "Update"}</button>
-						<button className="outline-primary" data-disabled={true} onClick={() => onCancel()}>Cancel
+						<button className="outline-primary" onClick={() => onCancel()}>Cancel
 						</button>
 					</footer>
 				</div>

@@ -22,23 +22,23 @@ describe("UserRole", () => {
         expect(screen.getByText(/User Roles/i)).toBeInTheDocument();
     });
 
-    it("should test mounted event", () => {
-        return new Promise(resolve => {
+    it("should test mounted event", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_ROLE_MOUNTED, resolve, {once: true});
             render(<UserRole />);
         });
     });
 
-    it("should test unmounted event", () => {
-        return new Promise(resolve => {
+    it("should test unmounted event", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_ROLE_UNMOUNTED, resolve, {once: true});
             const {unmount} = render(<UserRole />);
             unmount();
         });
     });
 
-    it("should test setRoles", () => {
-        return new Promise(resolve => {
+    it("should test setRoles", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_ROLE_MOUNTED,  async event => {
                 const component = event.detail;
 
@@ -58,8 +58,8 @@ describe("UserRole", () => {
         });
     });
 
-    it("should add role and update", () => {
-        return new Promise(resolve => {
+    it("should add role and update", async () => {
+        await new Promise(resolve => {
             window.addEventListener(ApplicationConstants.USER_ROLE_MOUNTED,  async event => {
                 const component = event.detail;
 

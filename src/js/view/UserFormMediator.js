@@ -29,6 +29,7 @@ export class UserFormMediator extends Mediator {
     onRegister() {
         Object.keys(this.listeners).forEach(key => window.addEventListener(key, this.listeners[key]));
 
+        /** @type {UserProxy} */
         this.userProxy = this.facade.retrieveProxy(UserProxy.NAME);
         this.userProxy.findAllDepartments()
             .then(departments => this.component.setDepartments(departments))
@@ -44,9 +45,13 @@ export class UserFormMediator extends Mediator {
             ApplicationFacade.NEW_USER,
             ApplicationFacade.USER_DELETED,
             ApplicationFacade.USER_SELECTED
-        ]
+        ];
     }
 
+    /**
+     * @param {Notification} notification
+     * @param {User} notification.body
+     */
     handleNotification(notification) {
         switch (notification.name) {
             case ApplicationFacade.NEW_USER:
@@ -82,6 +87,7 @@ export class UserFormMediator extends Mediator {
         this.facade.sendNotification(ApplicationFacade.CANCEL_SELECTED);
     }
 
+    /** @returns {UserForm} */
     get component() {
         return this.viewComponent;
     }
