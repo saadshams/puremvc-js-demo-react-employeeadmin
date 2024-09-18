@@ -82,19 +82,15 @@ test.describe("End to End Tests", () => {
         await page.goto("http://localhost:4173/");
 
         // Fill the form
-        const random = Math.random();
+        await page.waitForTimeout(2000);
         await page.locator('input[id="first"]').fill('Shemp');
         await page.locator('input[id="last"]').fill('Stooge');
         await page.locator('input[id="email"]').fill('shemp@stooges.com');
-        await page.locator('input[id="username"]').fill('sshemp' + random);
+        await page.locator('input[id="username"]').fill('sshemp');
         await page.locator('input[id="password"]').fill('xyz987');
         await page.locator('input[id="confirm"]').fill('xyz987');
         await page.locator('select[id="department"]').selectOption({value: '2'});
-        await page.waitForFunction(() => {
-            const button = document.querySelector('#form button.primary');
-            return button && !button.disabled;
-        });
-        await expect(page.locator('#form footer button.primary')).toBeEnabled();
+        await page.waitForSelector('#form button.primary:not([disabled])');
         await page.locator('#form footer button.primary').click();
 
         // Wait for the list to be re-rendered
@@ -112,7 +108,7 @@ test.describe("End to End Tests", () => {
         let spans = shemp.locator('> *'); // label > span
         expect(await spans.count()).toBe(7);
         expect(await spans.nth(0).innerText()).toEqual("Stooge, Shemp");
-        expect(await spans.nth(1).innerText()).toEqual("sshemp" + random);
+        expect(await spans.nth(1).innerText()).toEqual("sshemp");
         expect(await spans.nth(2).innerText()).toEqual("Shemp");
         expect(await spans.nth(3).innerText()).toEqual("Stooge");
         expect(await spans.nth(4).innerText()).toEqual("shemp@stooges.com");
@@ -120,7 +116,7 @@ test.describe("End to End Tests", () => {
         expect(await spans.nth(6).innerText()).toBe("Sales");
 
         // Add role
-        await page.getByText('sshemp' + random).click();
+        await page.getByText('sshemp').click();
         await page.locator('#role footer select[id="roles"]').click();
         await page.waitForSelector('#role footer select[id="roles"]');
         await page.locator('#role footer select[id="roles"]').selectOption({value: '1'});
@@ -134,6 +130,8 @@ test.describe("End to End Tests", () => {
         // Delete user
         await page.locator('#list footer button[id="delete"]').click();
         await page.waitForFunction(() => document.querySelectorAll('#list main ul li').length === 4);
+
+
     });
 
 });

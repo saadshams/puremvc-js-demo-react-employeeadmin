@@ -12,8 +12,7 @@ import {act} from "react";
 import {ApplicationConstants} from "../../../src/js/ApplicationConstants.js";
 import {User} from "../../../src/js/model/valueObject/User.js";
 import {Department} from "../../../src/js/model/valueObject/Department.js";
-import {UserList} from "../../../src/js/view/components/UserList.jsx";
-import UserListEvents from "../../../src/js/view/events/UserListEvents";
+import {UserList, UserListEvents} from "../../../src/js/view/components/UserList.jsx";
 
 describe("UserList", () => {
 
