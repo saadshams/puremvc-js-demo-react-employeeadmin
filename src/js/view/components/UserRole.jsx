@@ -91,6 +91,7 @@ export const UserRole = () => {
 					<footer>
 						<label htmlFor="roles"></label>
 						<select id="roles" value={role.id} onChange={onChange} disabled={user === null}>
+							<option value={Role.NONE_SELECTED.id}>{Role.NONE_SELECTED.name}</option>
 							{roles.map(r => (
 								<option key={`role_option${r.id}`} value={r.id}>{r.name}</option>
 							))}

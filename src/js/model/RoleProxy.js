@@ -22,9 +22,7 @@ export class RoleProxy extends Proxy {
 		const response = await fetch(`${ApplicationConstants.API_URL}/roles`, {method: "GET"});
 		if (response.status === 200) {
 			const json = await response.json();
-			const roles = json.map(role => Role.fromJson(role));
-			roles.unshift(Role.NONE_SELECTED);
-			return roles;
+			return json.map(role => Role.fromJson(role));
 		} else {
 			const error = await response.json();
 			throw new Error(error.message);

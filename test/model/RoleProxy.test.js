@@ -38,10 +38,9 @@ describe("RoleProxy", () => {
         const result = await roleProxy.findAllRoles();
         expect(fetch).toHaveBeenCalledWith(`${ApplicationConstants.API_URL}/roles`, { method: "GET" });
         expect(Role.fromJson).toHaveBeenCalledTimes(2);
-        expect(result.length).toEqual(3);
-        expect(result[0]).toEqual(Role.NONE_SELECTED);
-        expect(result[1]).toEqual(mockRoles[0]);
-        expect(result[2]).toEqual(mockRoles[1]);
+        expect(result.length).toEqual(2);
+        expect(result[0]).toEqual(mockRoles[0]);
+        expect(result[1]).toEqual(mockRoles[1]);
     });
 
     it("should throw error for fetch all roles", async () => {

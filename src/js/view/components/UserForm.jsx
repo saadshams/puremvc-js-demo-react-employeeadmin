@@ -10,6 +10,7 @@ import styles from "../../../css/form.module.css"
 import {useEffect, useMemo, useState} from "react";
 import {ApplicationConstants} from "../../ApplicationConstants";
 import {User} from "../../model/valueObject/User";
+import {Department} from "../../model/valueObject/Department.js";
 
 export class UserFormEvents {
 	static SAVE   = "events/user/form/save";
@@ -106,6 +107,7 @@ export const UserForm = () => {
 							<li>
 								<label htmlFor="department">Department:</label>
 								<select id="department" value={user.department.id} onChange={onChange}>
+									<option value={Department.NONE_SELECTED.id}>{Department.NONE_SELECTED.name}</option>
 									{departments.map(department => (
 										<option key={`department_${department.id}`}
 										        value={department.id}>{department.name}</option>

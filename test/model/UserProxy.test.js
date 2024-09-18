@@ -113,7 +113,7 @@ describe("UserProxy", () => {
         Department.fromJson.mockImplementation(department => department);
 
         const departments = await userProxy.findAllDepartments();
-        expect(departments).toEqual([Department.NONE_SELECTED, ...mockDepartments.map(Department.fromJson)]);
+        expect(departments).toEqual(mockDepartments.map(Department.fromJson));
         expect(fetch).toHaveBeenCalledWith(`${ApplicationConstants.API_URL}/departments`, { method: "GET" });
     });
 
