@@ -12,7 +12,7 @@ import {act} from "react";
 import {ApplicationConstants} from "../../../src/js/ApplicationConstants.js";
 import {User} from "../../../src/js/model/valueObject/User.js";
 import {Department} from "../../../src/js/model/valueObject/Department.js";
-import {UserForm} from "../../../src/js/view/components/UserForm.jsx";
+import {UserForm, UserFormEvents} from "../../../src/js/view/components/UserForm.jsx";
 
 describe("UserForm", () => {
 
@@ -108,7 +108,7 @@ describe("UserForm", () => {
                     fireEvent.change(screen.getByLabelText("Username:"), {target: {value: "lstooge1"}});
                 });
 
-                window.addEventListener(component.UPDATE, (event) => {
+                window.addEventListener(UserFormEvents.UPDATE, (event) => {
                     expect(event.detail.username).toBe("lstooge1");
                     resolve();
                 }, {once: true});
