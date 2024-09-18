@@ -48,9 +48,9 @@ describe("UserForm", () => {
 
                 await waitFor(() => {
                     const options = screen.getAllByRole("option");
-                    expect(options).toHaveLength(2);
-                    expect(options[0]).toHaveTextContent("Accounting");
-                    expect(options[1]).toHaveTextContent("Sales");
+                    expect(options).toHaveLength(3); // including default option NONE_SELECTED
+                    expect(options[1]).toHaveTextContent("Accounting");
+                    expect(options[2]).toHaveTextContent("Sales");
                 });
 
                 resolve();
@@ -74,7 +74,7 @@ describe("UserForm", () => {
 
                 await waitFor(() => {
                     const options = screen.getAllByRole("option");
-                    expect(options).toHaveLength(2);
+                    expect(options).toHaveLength(3); // including default option
                     expect(screen.getByLabelText("First Name:").value).toBe(larry.first);
                     expect(screen.getByLabelText("Last Name:").value).toBe(larry.last);
                     expect(screen.getByLabelText("Email:").value).toBe(larry.email);
@@ -97,7 +97,7 @@ describe("UserForm", () => {
                 const component = event.detail;
 
                 act(() => {
-                    const departments = [Department.NONE_SELECTED, new Department(1, "Accounting"), new Department(2, "Sales")];
+                    const departments = [new Department(1, "Accounting"), new Department(2, "Sales")];
                     component.setDepartments(departments);
                     component.setUser(new User());
                 });
@@ -111,7 +111,7 @@ describe("UserForm", () => {
 
                 await waitFor(() => {
                     const options = screen.getAllByRole("option");
-                    expect(options).toHaveLength(3);
+                    expect(options).toHaveLength(3); // including default option
                 });
 
                 fireEvent.change(screen.getByLabelText("Department:"), { target: { value: '1' } });
@@ -138,7 +138,7 @@ describe("UserForm", () => {
                 });
 
                 await waitFor(async () => {
-                    expect(screen.getAllByRole("option")).toHaveLength(2);
+                    expect(screen.getAllByRole("option")).toHaveLength(3); // including default option
                     fireEvent.change(screen.getByLabelText("Username:"), {target: {value: "lstooge1"}});
                 });
 
