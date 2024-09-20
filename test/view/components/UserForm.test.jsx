@@ -54,7 +54,7 @@ describe("UserForm", () => {
                 });
 
                 resolve();
-            }, {once: true})
+            }, {once: true});
             render(<UserForm />);
         });
     });
@@ -156,7 +156,7 @@ describe("UserForm", () => {
 
     it("should test cancel user", async () => {
         await new Promise(resolve => {
-            window.addEventListener(ApplicationConstants.USER_FORM_MOUNTED, (event) => {
+            window.addEventListener(ApplicationConstants.USER_FORM_MOUNTED, () => {
                 window.addEventListener(UserFormEvents.CANCEL, resolve, {once: true});
                 fireEvent.click(screen.getByText("Cancel"));
             }, {once: true});
